@@ -29,3 +29,10 @@ Generating a plain-text calendar grid is a small but fiddly task: weekday alignm
 - Months whose first day is not Monday will have leading blank cells.
 - Months whose last day is not Sunday will have trailing blank cells.
 - `render_month` raises `ValueError` for month values outside 1–12.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
